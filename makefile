@@ -4,12 +4,15 @@ LDFLAGS = -Wl,--wrap=malloc -Wl,--wrap=calloc -Wl,--wrap=realloc -Wl,--wrap=real
 
 .PHONY: clean all
 
-all: libnand.so nand_example
+all: libnand.so nand_example auto
 
 libnand.so : nand.o memory_tests.o
 	$(CC) -shared $(LDFLAGS) -o $@ $^
 
 nand_example: nand_example.o
+	$(CC) -o $@ $^ -L. -lnand -Wl,-rpath='.'
+
+auto: interactor.o
 	$(CC) -o $@ $^ -L. -lnand -Wl,-rpath='.'
 
 %.o: %.c

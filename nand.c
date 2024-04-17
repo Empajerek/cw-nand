@@ -154,8 +154,6 @@ int nand_connect_signal(bool const *s, nand_t *g_in, unsigned k){
     g_in->inputs[k].handler.signal = s;
 
     return 0;
-
-
 }
 
 ssize_t nand_fan_out(nand_t const *g){
@@ -213,12 +211,14 @@ static ssize_t nand_evaluate_single(nand_t *g, unsigned eval_no){
             result &= g->inputs[i].handler.gate->value;
         }else{
             result &= *g->inputs[i].handler.signal;
+            if(g->critical_lenght == 0){
+                g->critical_lenght = 1;
+            }
         }
     }
     g->value = !result;
     g->is_checked = true;
     return g->critical_lenght;
-
 }
 
 ssize_t nand_evaluate(nand_t **g, bool *s, size_t m){

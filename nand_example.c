@@ -273,12 +273,12 @@ int main(int argc, char *argv[]) {
   return WRONG_TEST;
 }
 
-// #define TEST1
-// #define TEST2
-// #define TEST3
-// #define TEST4
-// #define TEST5
-// #define TEST6
+#define TEST1
+#define TEST2
+#define TEST3
+#define TEST4
+#define TEST5
+#define TEST6
 #define TEST7
 #define TEST8
 #define TEST9
@@ -977,6 +977,6 @@ int testy() {
     }
 #endif
 
-    printf("Zakonczono testowanie.");
+    printf("Zakonczono testowanie.\n");
     return 0;
 }
