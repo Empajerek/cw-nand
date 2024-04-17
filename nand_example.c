@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
+#include <stdlib.h>
 
 /** MAKRA SKRACAJĄCE IMPLEMENTACJĘ TESTÓW **/
 
@@ -45,7 +46,7 @@
 /** WŁAŚCIWE TESTY **/
 
 // To jest przykładowy test udostępniony studentom.
-void testy();
+int testy();
 
 static int example(void) {
   nand_t *g[3];
@@ -272,12 +273,12 @@ int main(int argc, char *argv[]) {
   return WRONG_TEST;
 }
 
-#define TEST1
-#define TEST2
-#define TEST3
-#define TEST4
-#define TEST5
-#define TEST6
+// #define TEST1
+// #define TEST2
+// #define TEST3
+// #define TEST4
+// #define TEST5
+// #define TEST6
 #define TEST7
 #define TEST8
 #define TEST9
@@ -291,7 +292,7 @@ int main(int argc, char *argv[]) {
 #define TEST17
 #define TEST18
 
-void testy() {
+int testy() {
 
     // TESTY NA POPRAWNOŚĆ POŁĄCZEŃ, ZAKŁADAJĄC BRAK BŁĘDÓW ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -977,4 +978,5 @@ void testy() {
 #endif
 
     printf("Zakonczono testowanie.");
+    return 0;
 }

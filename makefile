@@ -1,10 +1,10 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Wno-implicit-fallthrough -std=gnu17 -fPIC -O2
+CFLAGS = -Wall -Wextra -Wno-implicit-fallthrough -std=gnu17 -fPIC -g
 LDFLAGS = -Wl,--wrap=malloc -Wl,--wrap=calloc -Wl,--wrap=realloc -Wl,--wrap=reallocarray -Wl,--wrap=free -Wl,--wrap=strdup -Wl,--wrap=strndup
 
-.PHONY: all clean
+.PHONY: clean all
 
-all: libnand.so nand_examplek
+all: libnand.so nand_example
 
 libnand.so : nand.o memory_tests.o
 	$(CC) -shared $(LDFLAGS) -o $@ $^

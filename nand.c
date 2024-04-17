@@ -72,8 +72,8 @@ nand_t *nand_new(unsigned n) {
 
     gate->outputs = (output_t *) calloc(INITIAL_OUTPUTS, sizeof(output_t));
     if(gate->outputs == NULL){
-        free(gate);
         free(gate->inputs);
+        free(gate);
         errno = ENOMEM;
         return NULL;
     }
@@ -154,6 +154,8 @@ int nand_connect_signal(bool const *s, nand_t *g_in, unsigned k){
     g_in->inputs[k].handler.signal = s;
 
     return 0;
+
+
 }
 
 ssize_t nand_fan_out(nand_t const *g){
@@ -188,33 +190,35 @@ nand_t* nand_output(nand_t const *g, ssize_t k){
 }
 
 static ssize_t nand_evaluate_single(nand_t *g, unsigned eval_no){
-    if(g->eval_num < eval_no){
-        g->eval_num = eval_no;
-        g->is_checked = false;
-        g->critical_lenght = 1;
-        bool result = 1;
-        for(unsigned i = 0; i < g->input_num; i++){
-            if(!g->inputs[i].is_occupied)
-                return -1;
-            if(g->inputs[i].is_gate){
-                ssize_t critical_lenght = nand_evaluate_single(g->inputs[i].handler.gate, eval_no);
-                if(critical_lenght == -1)
-                    return -1;
-                if(critical_lenght >= g->critical_lenght)
-                    g->critical_lenght = critical_lenght + 1;
-                result &= g->inputs[i].handler.gate->value;
-            }else{
-                result &= *g->inputs[i].handler.signal;
-            }
-        }
-        g->value = result;
-        g->is_checked = true;
-        return g->critical_lenght;
-    }else{
+    if(g == NULL)
+        return -1;
+    if(g->eval_num == eval_no){
         if(!g->is_checked)
             return -1;
         return g->critical_lenght;
     }
+    g->eval_num = eval_no;
+    g->is_checked = false;
+    g->critical_lenght = 0;
+    bool result = 1;
+    for(unsigned i = 0; i < g->input_num; i++){
+        if(!g->inputs[i].is_occupied)
+            return -1;
+        if(g->inputs[i].is_gate){
+            ssize_t critical_lenght = nand_evaluate_single(g->inputs[i].handler.gate, eval_no);
+            if(critical_lenght == -1)
+                return -1;
+            if(critical_lenght >= g->critical_lenght)
+                g->critical_lenght = critical_lenght + 1;
+            result &= g->inputs[i].handler.gate->value;
+        }else{
+            result &= *g->inputs[i].handler.signal;
+        }
+    }
+    g->value = !result;
+    g->is_checked = true;
+    return g->critical_lenght;
+
 }
 
 ssize_t nand_evaluate(nand_t **g, bool *s, size_t m){
