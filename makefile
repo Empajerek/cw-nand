@@ -19,4 +19,4 @@ auto: interactor.o
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 clean:
-	rm -f *.o
+	rm -f *.o *.so

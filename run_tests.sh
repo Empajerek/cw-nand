@@ -2,7 +2,7 @@
 
 VG_FLAGS="--error-exitcode=123 --leak-check=full --show-leak-kinds=all --errors-for-leak-kinds=all --track-origins=yes"
 
-num_tests=10
+num_tests=10000
 vg=0
 
 while getopts 'vn:' OPTION; do

@@ -62,7 +62,7 @@
             "name": "gdb auto",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/auto",
+            "program": "${workspaceFolder}/auto",
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
@@ -80,7 +80,7 @@
                     "ignoreFailures": true
                 }
             ],
-            "preLaunchTask": "makefile"
+            "preLaunchTask": "makefile",
         },
     ]
 }

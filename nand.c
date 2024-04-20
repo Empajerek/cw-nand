@@ -115,15 +115,15 @@ int nand_connect_nand(nand_t *g_out, nand_t* g_in, unsigned k){
         return -1;
     }
 
+    if(g_in->inputs[k].is_occupied && g_in->inputs[k].is_gate){
+        output_remove(g_in->inputs[k].handler.gate, g_in->inputs[k].output_no);
+    }
+
     int result = output_append(g_out, g_in, k);
 
     if(result == -1){
         errno = ENOMEM;
         return -1;
-    }
-
-    if(g_in->inputs[k].is_occupied && g_in->inputs[k].is_gate){
-        output_remove(g_in->inputs[k].handler.gate, g_in->inputs[k].output_no);
     }
 
     g_in->inputs[k].output_no = result;
